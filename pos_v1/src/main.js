@@ -7,31 +7,29 @@ var savePrice = 0;
 	
 function printInventory(inputs)
 {
-	
-	console.log('***<没钱赚商店>购物清单***\n');
+	var output ='***<没钱赚商店>购物清单***\n';
 	
 	//array,count分别保存输入测试用例的商品种类和商品购买个数
 	var array = new Array();
 	var count = new Array();
 	processInputs(inputs, array, count);
 	
-	getPrice(array, count);
+	output = output + getPrice(array, count);
 	
-	console.log("----------------------\n");
-	console.log("挥泪赠送商品：\n")
-	getSendProducts(array, count);
-	
-	console.log("----------------------\n");
+	output = output + '----------------------\n'+'挥泪赠送商品：\n';
+	output = output + getSendProducts(array, count);
 	savePrice = tempPrice - sumPrice;
-	console.log("总计："+toDecimal2(sumPrice)+"(元)\n");
-	console.log("节省："+toDecimal2(savePrice)+"(元)\n");
-	console.log("**********************");
 	
+	output = output + '----------------------\n'+'总计：'+toDecimal2(sumPrice)+'(元)\n'+'节省：'+toDecimal2(savePrice)+'(元)\n';
+	output = output + '**********************';
+	
+	console.log(output);
 }
 
 //针对小票物品的id及购买个数，计算价格
 function getPrice(array, count)
-{		
+{	var outputPriceStr = '';
+
 	for(var i=0;i<array.length;i++)
 	{
 		var productID = array[i];
@@ -77,14 +75,16 @@ function getPrice(array, count)
 		
 		sumPrice = sumPrice + totalPrice;
 		
-		
-		console.log("名称："+name+"，数量："+num+unit+"，单价："+toDecimal2(price)+"(元)，小计："+toDecimal2(totalPrice)+"(元)\n");
+		outputPriceStr = outputPriceStr + '名称：'+name+'，数量：'+num+unit+'，单价：'+toDecimal2(price)+'(元)，小计：'+toDecimal2(totalPrice)+'(元)\n';
 	}
+	
+	return outputPriceStr;
 }
 
 
 function getSendProducts(array, count)
 {
+	var sendProductStr = '';
 	for(var i=0;i<array.length;i++)
 	{
 		var productID = array[i];
@@ -115,13 +115,14 @@ function getSendProducts(array, count)
 					if(lists[m] == productID)
 					{
 						var sendNum = parseInt(num/3);
-						console.log("名称："+name+"，数量："+sendNum+unit+"\n");
+						sendProductStr = sendProductStr + '名称：'+name+'，数量：'+sendNum+unit+'\n';
 					}
 				}
 			}
 		}
 		
 	}
+	return sendProductStr;
 }
 
 
